@@ -1,51 +1,36 @@
 import React, { useState } from "react";
 
-function NewTaskForm({ categories, onTaskFormSubmit }) {
-  const [taskCategory, setTaskCategory] = useState("Code");
-  const [taskDetails, setTaskDetails] = useState("");
+function NewTaskForm({categories,onTaskFormSubmit}) {
+  const [newTask,setNewTask] = useState({
+    text:"",
+    category:"Code"
+  })
 
-  // Adds event handler for onDetails and handleChange
-  const options = categories
-    .filter(category => category !== "All")
-    .map(category => (
-      <option key={category} value={category}>
-        {category}
-      </option>
-    ));
+  const newCat = categories.filter((category)=> category!=="All")
+  const catOptions = newCat.map((category)=>{
+    return <option key={category} value={category}>{category}</option>
+  })
 
-  //handles category selection
-  function updateCategory(e) {
-    setTaskCategory(e.target.value);
+  function handleChange(evt){
+    setNewTask({
+      ...newTask,
+      [evt.target.name]: evt.target.value
+    })
   }
-
-//handles form submission
-  function handleSubmit(e) {
-    e.preventDefault();
-    if (taskDetails.trim() !== "") { 
-      const newItem = {
-        text: taskDetails,
-        category: taskCategory,
-      };
-      onTaskFormSubmit(newItem);
-      setTaskDetails("");
-    }
+  function handleSubmit(evt){
+    evt.preventDefault()
+    onTaskFormSubmit(newTask)
   }
-
   return (
     <form className="new-task-form" onSubmit={handleSubmit}>
-      <label htmlFor="task-details">
+      <label>
         Details
-        <input
-          type="text"
-          name="text"
-          onChange={e => setTaskDetails(e.target.value)} 
-          value={taskDetails}
-        />
+        <input type="text" name="text" onChange={handleChange}/>
       </label>
-      <label htmlFor="task-category">
+      <label>
         Category
-        <select name="category" value={taskCategory} onChange={updateCategory}>
-          {options}
+        <select name="category" onChange={handleChange}>
+          {catOptions}
         </select>
       </label>
       <input type="submit" value="Add task" />
