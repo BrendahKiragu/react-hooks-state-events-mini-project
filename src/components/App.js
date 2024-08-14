@@ -15,9 +15,9 @@ function App() {
     setTasks([...tasks, newItem]);
   }
 
-function handleDelete(taskToDelete) {
-  setTasks(tasks.filter(task => task.id !== taskToDelete.id));
-}
+  function handleDelete(text) {
+    setTasks(tasks.filter(task => task.text !== text));
+  }
 
 const filteredTasks = selectedCategory === "All"
     ? tasks

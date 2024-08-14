@@ -9,7 +9,7 @@ function TaskList({ tasks, handleDelete }) {
           key={task.text} 
           text={task.text}
           category={task.category}
-          handleDelete={() => handleDelete(task)}
+           handleDelete={handleDelete}
         />
       ))}    
     </div>

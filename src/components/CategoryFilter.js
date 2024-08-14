@@ -3,7 +3,7 @@ import React from "react";
 function CategoryFilter({ categories, selectedCategory, setSelectedCategory }) {
  
   function handleClick(e) {
-    const selected = e.target.value;
+    const selected = e.target.textContent;
     setSelectedCategory(selected);
   }    
 
@@ -16,7 +16,6 @@ function CategoryFilter({ categories, selectedCategory, setSelectedCategory }) {
           key={cat}
           className={cat === selectedCategory ? 'selected' : ''}
           onClick={handleClick}
-          value={cat}
         >
           {cat}
         </button>
