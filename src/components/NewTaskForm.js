@@ -1,36 +1,47 @@
 import React, { useState } from "react";
 
-function NewTaskForm({categories,onTaskFormSubmit}) {
-  const [newTask,setNewTask] = useState({
-    text:"",
-    category:"Code"
-  })
+function NewTaskForm({ categories, onTaskFormSubmit }) {
+  const [newTask, setNewTask] = useState({
+    text: "",
+    category: "Code",
+  });
 
-  const newCat = categories.filter((category)=> category!=="All")
-  const catOptions = newCat.map((category)=>{
-    return <option key={category} value={category}>{category}</option>
-  })
+  const newCategory = categories.filter((category) => category !== "All");
+  const categoryOptions = newCategory.map((category) => {
+    return (
+      <option key={category} value={category}>
+        {category}
+      </option>
+    );
+  });
 
-  function handleChange(evt){
+  function handleChange(e) {
     setNewTask({
       ...newTask,
-      [evt.target.name]: evt.target.value
-    })
+      [e.target.name]: e.target.value,
+    });
+
   }
-  function handleSubmit(evt){
-    evt.preventDefault()
-    onTaskFormSubmit(newTask)
+  
+  function handleSubmit(e) {
+    e.preventDefault();
+    onTaskFormSubmit(newTask);
+    setNewTask({
+      text: "",
+      category: "Code",
+    });
   }
+
   return (
     <form className="new-task-form" onSubmit={handleSubmit}>
       <label>
         Details
-        <input type="text" name="text" onChange={handleChange}/>
+        <input type="text" name="text" onChange={handleChange} />
       </label>
       <label>
         Category
         <select name="category" onChange={handleChange}>
-          {catOptions}
+          {categoryOptions}
         </select>
       </label>
       <input type="submit" value="Add task" />
